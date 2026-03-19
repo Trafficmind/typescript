@@ -1,0 +1,58 @@
+{
+  "name": "trafficmind-typescript-sdk",
+  "version": "1.0.0",
+  "description": "TypeScript client (SDK) for Trafficmind API",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trafficmind/typescript.git"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "main": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build:esm": "tsc -p tsconfig.build.json --outDir dist/esm",
+    "build:cjs": "tsc -p tsconfig.cjs.json && node scripts/fix-cjs.mjs",
+    "build": "npm run build:esm && npm run build:cjs",
+    "test": "node --test ./test/*.test.js",
+    "pretest": "npm run build",
+    "smoke": "node ./examples/smoke.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "cs-check": "prettier --check \"src/**/*.ts\"",
+    "cs-fix": "prettier --write \"src/**/*.ts\"",
+    "coverage": "c8 node --test ./test/*.test.js",
+    "check": "npm run cs-check && npm run lint && npm run typecheck && npm test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.3",
+    "typescript": "^5.8.0",
+    "eslint": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "c8": "^10.0.0"
+  },
+  "c8": {
+    "reporter": ["text", "html"],
+    "exclude": ["test/**", "scripts/**", "examples/**"]
+  }
+}
